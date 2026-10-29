@@ -1,0 +1,29 @@
+[package]
+name = "foqdt-core"
+description = "foqdt wire protocol: RaptorQ fountain code, Brotli, QR encode/scan"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+brotli = "9"
+qrcode = { version = "0.14", default-features = false }
+raptorq = "2"
+sha2 = "0.11"
+
+# zxing-cpp is the fastest, most robust decoder, but it is C++ and does not build for
+# wasm32-unknown-unknown; the web uses rxing, a pure-Rust port of the same library.
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+zxing-cpp = { version = "0.5", features = ["bundled"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# rxing timestamps every result with chrono::Utc::now(); without wasmbind that panics on the web.
+chrono = { version = "0.4", default-features = false, features = ["clock", "wasmbind"] }
+rxing = { version = "0.9", default-features = false, features = ["decoders", "multi_barcode_readers", "qrcode", "encoding_rs"] }
+
+[dev-dependencies]
+rxing = { version = "0.9", default-features = false, features = ["decoders", "multi_barcode_readers", "qrcode", "encoding_rs"] }
+
+[lints]
+workspace = true

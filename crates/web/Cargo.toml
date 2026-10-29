@@ -1,0 +1,22 @@
+[package]
+name = "foqdt-web"
+description = "foqdt web app (WebAssembly, build with trunk)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+eframe = { workspace = true, default-features = true }
+foqdt-core.workspace = true
+foqdt-ui.workspace = true
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+js-sys = "0.3"
+rfd = "0.17"
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+web-sys = { version = "0.3", features = ["Window", "Document", "Element", "Navigator", "MediaDevices", "MediaStream", "MediaStreamTrack", "MediaTrackSettings", "MediaStreamConstraints", "HtmlMediaElement", "HtmlVideoElement", "HtmlCanvasElement", "CanvasRenderingContext2d", "ImageData", "Blob", "Url", "HtmlAnchorElement"] }
+
+[lints]
+workspace = true

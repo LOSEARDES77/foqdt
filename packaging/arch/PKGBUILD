@@ -1,0 +1,44 @@
+# Builds foqdt from this source tree: run `makepkg -si` in packaging/arch.
+pkgname=foqdt
+pkgver=0.3.0
+pkgrel=1
+pkgdesc='Fast Offline QR Data Transfer: send files between devices through animated QR codes'
+arch=('x86_64' 'aarch64')
+license=('MIT')
+# Wayland/X11, Vulkan/GL and V4L2 are loaded at runtime, so the binary itself links only glibc.
+depends=('gcc-libs' 'glibc' 'libxkbcommon' 'wayland' 'libx11' 'libxcursor' 'libxrandr' 'libxi' 'vulkan-icd-loader' 'hicolor-icon-theme')
+makedepends=('cargo' 'cmake')
+optdepends=('xdg-desktop-portal: file open/save dialogs'
+            'v4l-utils: list cameras to pick the right device number')
+options=('!lto' '!debug')
+
+_root=$(realpath "$startdir/../..")
+
+prepare() {
+  cd "$_root"
+  export RUSTUP_TOOLCHAIN=stable
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+  cd "$_root"
+  export RUSTUP_TOOLCHAIN=stable
+  export CARGO_TARGET_DIR="$srcdir/target"
+  cargo build --frozen --release -p foqdt-desktop
+}
+
+check() {
+  cd "$_root"
+  export RUSTUP_TOOLCHAIN=stable
+  export CARGO_TARGET_DIR="$srcdir/target"
+  cargo test --frozen --release -p foqdt-core
+}
+
+package() {
+  install -Dm755 "$srcdir/target/release/foqdt" "$pkgdir/usr/bin/foqdt"
+  install -Dm644 "$_root/packaging/foqdt.desktop" "$pkgdir/usr/share/applications/foqdt.desktop"
+  install -Dm644 "$_root/packaging/foqdt.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/foqdt.svg"
+  install -Dm644 "$_root/packaging/icon-512.png" "$pkgdir/usr/share/icons/hicolor/512x512/apps/foqdt.png"
+  install -Dm644 "$_root/README.md" "$pkgdir/usr/share/doc/foqdt/README.md"
+  install -Dm644 "$_root/LICENSE" "$pkgdir/usr/share/licenses/foqdt/LICENSE"
+}

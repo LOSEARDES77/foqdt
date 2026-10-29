@@ -1,0 +1,14 @@
+[package]
+name = "foqdt-ui"
+description = "foqdt egui app shared by every frontend"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+eframe = { workspace = true, features = ["persistence"] }
+foqdt-core.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,21 @@
+[package]
+name = "foqdt-desktop"
+description = "foqdt native desktop app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "foqdt"
+path = "src/main.rs"
+
+[dependencies]
+eframe = { workspace = true, default-features = true }
+foqdt-core.workspace = true
+foqdt-ui.workspace = true
+nokhwa = { version = "0.10", features = ["input-native"] }
+rfd = "0.17"
+
+[lints]
+workspace = true

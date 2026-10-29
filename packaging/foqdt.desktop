@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=foqdt
+GenericName=QR File Transfer
+Comment=Send files between devices through animated QR codes, fully offline
+Exec=foqdt %f
+Icon=foqdt
+Terminal=false
+Categories=Network;FileTransfer;
+Keywords=qr;transfer;offline;airgap;camera;
+StartupWMClass=foqdt

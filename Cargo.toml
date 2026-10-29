@@ -1,0 +1,24 @@
+[workspace]
+resolver = "3"
+members = ["crates/core", "crates/ui", "crates/desktop", "crates/web", "crates/android"]
+
+[workspace.package]
+version = "0.3.0"
+edition = "2024"
+license = "MIT"
+authors = ["LOSEARDES77"]
+
+[workspace.dependencies]
+foqdt-core = { path = "crates/core" }
+foqdt-ui = { path = "crates/ui" }
+eframe = { version = "0.37", default-features = false }
+
+[profile.release]
+lto = "thin"
+
+# Google Rust style: https://google.github.io/styleguide/rustguide.html
+[workspace.lints.clippy]
+# Prefer `expect` with the invariant spelled out.
+unwrap_used = "warn"
+# Every `unsafe` block needs a `// SAFETY:` comment.
+undocumented_unsafe_blocks = "warn"

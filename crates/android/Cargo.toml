@@ -1,0 +1,20 @@
+[package]
+name = "foqdt-android"
+description = "foqdt Android app (NativeActivity); build the APK with build-apk.sh"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[lib]
+name = "foqdt_android"
+crate-type = ["cdylib"]
+
+[target.'cfg(target_os = "android")'.dependencies]
+eframe = { workspace = true, features = ["android-native-activity", "glow", "default_fonts"] }
+foqdt-ui.workspace = true
+jni = "0.22"
+winit = { version = "0.30", default-features = false, features = ["android-native-activity"] }
+
+[lints]
+workspace = true

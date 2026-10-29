@@ -1,0 +1,6 @@
+# Google Rust style: https://google.github.io/styleguide/rustguide.html#formatting
+max_width = 100
+# Nightly-only options the guide also recommends; enable them when formatting with nightly:
+# hex_literal_case = "Lower"
+# format_macro_matchers = true
+# imports_granularity = "Module"
